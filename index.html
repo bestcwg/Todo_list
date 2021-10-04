@@ -8,19 +8,15 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/todolist.js"></script>
 </head>
-<body>
-    <h1>TODO-LIST</h1>
-    <div>
-        <ol class="thelist">
-            <li>Item 1</li>
-            <li>Item 2</li>
-            <li>Item 3</li>
-            <li>Item 4</li>
-            <li>Item 5</li>
-        </ol>
-    </div>
-    <label for="item">Add task to todo-list:</label>
-    <input type="text" id="item" name="item">
-    <button onclick="addTaskToList()">Add Task</button>
-</body>
+    <body>
+        <h1>TODO-LIST</h1>
+        <form name="list">
+            <ol id="thelist"></ol>
+        </form>
+        <label for="item">Add task to todo-list:</label>
+        <form name="test">
+            <input type="text" id="item" name="item">
+        </form>
+        <button onclick="addTaskToList()">Add Task</button>
+    </body>
 </html>
