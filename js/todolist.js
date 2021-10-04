@@ -26,7 +26,7 @@ function addTaskToStorage(item) {
 function loadTaskFromStorage() {
     if (myStorage.length > 0) {
         for (let key in myStorage) {
-            // Checks for only returning the actual keys and not setItems etc.
+            // Checks for only returning the relevant keys and not setItems etc.
             if (!myStorage.hasOwnProperty(key)) {
                 continue;
             }
