@@ -8,12 +8,9 @@ let myStorage = window.localStorage;
 
 function addTaskToList() {
     let task = document.forms.test.item.value;
-    
-    //let itemList = document.forms.list.thelist.value;
     let itemList = document.getElementById("thelist");
 
     itemList.innerHTML += `<li> ${task} </li>`;
-
 
     addTaskToStorage(task);
     console.log(task);
