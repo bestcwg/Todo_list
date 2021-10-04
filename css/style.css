@@ -1,0 +1,12 @@
+h1 {
+    text-align: center;
+}
+
+.thelist {
+    text-align: center;
+    list-style-type: none;
+}
+
+.item {
+    align-items: center;
+}
