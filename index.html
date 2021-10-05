@@ -11,12 +11,14 @@
     <body>
         <h1>TODO-LIST</h1>
         <form name="list">
-            <ol id="thelist"></ol>
+            <span id="thelist"></span>
         </form>
-        <label for="item">Add task to todo-list:</label>
-        <form name="test">
-            <input type="text" id="item" name="item">
-        </form>
-        <button onclick="addTaskToList()">Add Task</button>
+        <div id="addtaskinput">
+            <form name="textinput">
+                <label for="item">Add task to todo-list:</label>
+                <input type="text" id="item" name="item" required>
+                <button onclick="addTaskToList()">Add Task</button>
+            </form>
+        </div>
     </body>
 </html>

@@ -7,6 +7,6 @@ h1 {
     list-style-type: none;
 }
 
-.item {
-    align-items: center;
+#addtaskinput {
+    text-align: center;
 }

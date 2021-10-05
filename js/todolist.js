@@ -7,15 +7,16 @@ window.onload = () => {
 let myStorage = window.localStorage;
 
 function addTaskToList() {
-    let task = document.forms.test.item.value;
-    let itemList = document.getElementById("thelist");
+    const task = document.forms.textinput.item.value;
+    let listOfTask = document.getElementById("thelist");
+    if (task !== "")  {
+        listOfTask.innerHTML += `<li> ${task} </li>`;
 
-    itemList.innerHTML += `<li> ${task} </li>`;
-
-    addTaskToStorage(task);
-    console.log(task);
-    console.log(itemList);
-    console.log(myStorage);
+        addTaskToStorage(task);
+        console.log(task);
+        console.log(listOfTask);
+        console.log(myStorage);
+    }
 }
 
 function addTaskToStorage(item) {
@@ -31,10 +32,11 @@ function loadTaskFromStorage() {
                 continue;
             }
             let itemList = document.getElementById("thelist");
-            itemList.innerHTML += `<li> ${myStorage.getItem(key)} </li>`;
+            itemList.innerHTML += `<p> ${myStorage.getItem(key)} </p>`;
         }
     }
 }
+
 
 
 
