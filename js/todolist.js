@@ -32,10 +32,13 @@ function loadTaskFromStorage() {
                 continue;
             }
             let itemList = document.getElementById("thelist");
-            itemList.innerHTML += `<p> ${myStorage.getItem(key)} </p>`;
+            itemList.innerHTML += `<li> ${myStorage.getItem(key)} </li>`;
         }
     }
 }
+
+
+
 
 
 
