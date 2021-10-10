@@ -9,16 +9,15 @@
     <script src="js/todolist.js"></script>
 </head>
     <body>
-        <h1>TODO-LIST</h1>
-        <div class="test">
-            <ul id="thelist"></ul>
+        <div class="header">
+            <h1>TODO-LIST</h1>
         </div>
         <div id="addtaskinput">
             <form name="textinput">
-                <label for="item">Add task to todo-list:</label>
-                <input type="text" id="item" name="item" required>
-                <button onclick="addTaskToList()">Add Task</button>
+                <input type="text" id="inputfield" name="inputfield" required>
+                <button id="submit" type="button" onclick="addTaskToList()">Add Task</button>
             </form>
+            <ul id="thelist"></ul>
         </div>
     </body>
 </html>

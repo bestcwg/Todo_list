@@ -1,41 +1,100 @@
-window.onload = () => {
-    loadTaskFromStorage();
-    console.log(myStorage.length);
-    console.log(myStorage);
+window.onload = function() {
+    loadTaskFromStorage(myStorage);
 }
 
 let myStorage = window.localStorage;
+let itemList = new Array;
 
 function addTaskToList() {
-    const task = document.forms.textinput.item.value;
-    let listOfTask = document.getElementById("thelist");
+    const task = document.forms.textinput.inputfield.value;
+    let taskList = document.getElementById("thelist");
     if (task !== "")  {
-        listOfTask.innerHTML += `<li> ${task} </li>`;
+        let newItem = document.createElement("li");
+        newItem.innerHTML = task;
+        createDeleteButton(newItem);
+        createEditButton(newItem);
 
-        addTaskToStorage(task);
-        console.log(task);
-        console.log(listOfTask);
-        console.log(myStorage);
+        taskList.appendChild(newItem);
+        //addTaskToStorage(task);
+        itemList.push(task);
     }
 }
 
 function addTaskToStorage(item) {
-    let key = Math.random();
+    let key = myStorage.length + 1;
     myStorage.setItem(key, item);
 }
 
-function loadTaskFromStorage() {
-    if (myStorage.length > 0) {
-        for (let key in myStorage) {
+function loadTaskFromStorage(storage) {
+    if (storage.length > 0) {
+        for (let key in storage) {
             // Checks for only returning the relevant keys and not setItems etc.
-            if (!myStorage.hasOwnProperty(key)) {
+            if (!storage.hasOwnProperty(key)) {
                 continue;
             }
-            let itemList = document.getElementById("thelist");
-            itemList.innerHTML += `<li> ${myStorage.getItem(key)} </li>`;
+            let storageTaskList = document.getElementById("thelist");
+            let newItem = document.createElement("li");
+           
+            newItem.innerHTML = storage.getItem(key);
+            createDeleteButton(newItem);
+            createEditButton(newItem);
+            storageTaskList.appendChild(newItem);
         }
+        let test = document.querySelector("#thelist");
+        test.addEventListener("click", function(item) {
+        if (item.target && item.target.tagName === "LI") {
+            item.target.classList.toggle("checked");
+        }
+    })
     }
 }
+
+function createDeleteButton(item) {
+    let span = document.createElement("SPAN");
+    let txtNode = document.createTextNode("\u00D7");
+    
+    span.className = "close";
+    span.appendChild(txtNode);
+    span.contentEditable = "false";
+    span.addEventListener('click', function() {
+        let test = this.parentElement;
+        test.remove();
+    });
+    item.appendChild(span);
+}
+
+function createEditButton(item) {
+    let span = document.createElement("SPAN");
+    let txtNode = document.createTextNode("edit");
+    
+    span.className = "edit";
+    span.appendChild(txtNode);
+    span.contentEditable = "false";
+    span.addEventListener('click', function() {
+        let test = this.parentElement;
+        switch(test.contentEditable) {
+            case "false":
+                test.contentEditable = "true";
+                break;
+            case "true":
+                test.contentEditable = "false";
+                break;
+            default:
+                test.contentEditable = "true";
+        }
+    });
+    item.appendChild(span);
+}
+
+document.querySelectorAll("#thelist li").forEach(e => 
+    console.log(e));
+
+
+
+
+
+
+
 
 
 

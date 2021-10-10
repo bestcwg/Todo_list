@@ -1,27 +1,84 @@
 body {
     text-align: center;
+    background-color: #97BEC3;
+    margin: 0;
+	padding: 0;
+	border: 0;
+    font-size: auto;
+	font: inherit;
+	vertical-align: baseline;
 }
 
-h1 {
-    background-color: violet;
+.header {
+    background-color: #314D5D;
+}
+
+.header h1 {
+    margin: 0%;
+    font-size: 50px;
 }
 
 #thelist {
-    list-style-type: none;
+    margin-top: 0%;
+    list-style: none;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
-#thelist li::before {
+#thelist ::before {
     content: "\200B";
 }
 
 #thelist li {
-    font-size: 20px;
+    font-size: 30px;
     border-radius: 5px;
     border: 2px black solid;
-    background-color: yellow;
-    width: 40%;
+    background-color: #CFA18F;
     margin-left: auto;
     margin-right: auto;
     margin-top: 3px;
     margin-bottom: 3px;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+}
+
+#submit {
+    background-color: #CFA18F;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+#addtaskinput {
+    padding-top: 10px;
+}
+
+#inputfield {
+    width: 30%;
+    border: none;
+    outline: none;
+    font-size: 30px;
+}
+
+#thelist .checked {
+    background-color: green;
+}
+
+#thelist .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-right: 10px;
+    padding-left: 10px;
+    background-color: red;
+}
+
+#thelist .edit {
+    position: absolute;
+    right: 3.3%;
+    top: 0;
+    padding-right: 10px;
+    padding-left: 10px;
+    background-color: rgb(228, 125, 125);
 }
