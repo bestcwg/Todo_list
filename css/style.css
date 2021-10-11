@@ -43,6 +43,13 @@ body {
     position: relative;
 }
 
+#thelist li p { 
+    position: absolute;
+    top: 0;
+    left: 4%;
+    margin-top: 0%;
+}
+
 #submit {
     background-color: #CFA18F;
     border: none;
@@ -55,14 +62,20 @@ body {
 }
 
 #inputfield {
-    width: 30%;
+    width: 50%;
     border: none;
     outline: none;
     font-size: 30px;
+    margin-top: 5px;
 }
 
 #thelist .checked {
-    background-color: green;
+    background-color: rgba(44, 102, 44, 0.74);
+    
+}
+
+#thelist .checked p {
+    text-decoration: line-through;
 }
 
 #thelist .close {
@@ -71,13 +84,20 @@ body {
     top: 0;
     padding-right: 10px;
     padding-left: 10px;
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.479);
+}
+
+#thelist .close:hover {
+    background-color: rgba(241, 163, 163, 0.678);
 }
 
 #thelist #checkbox {
+    
     position: absolute;
     left: 0;
     top: 0;
+    width: 30px;
+    height: 30px;
     padding-right: 10px;
     padding-left: 10px;
 }

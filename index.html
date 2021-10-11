@@ -12,19 +12,17 @@
         <div class="header">
             <h1>TODO-LIST</h1>
         </div>
-        <div id="addtaskinput">
-            <form name="textinput">
-                <input type="text" id="inputfield" name="inputfield" required>
-                <button id="submit" type="button">Add Task</button>
-            </form>
-            <ul id="thelist"></ul>
-            <template id="task">
-                <li>
-                    <p contenteditable="true"></p>
-                    <span class="close">×</span>
-                    <input type="checkbox" id="checkbox" name="checkbox">
-                </li>
-            </template>
-        </div>
+        <form name="textinput">
+            <input type="text" id="inputfield" name="inputfield" required>
+            <button id="submit" type="button">Add Task</button>
+        </form>
+        <ul id="thelist"></ul>
+        <template id="task">
+            <li>
+                <p contenteditable="true"></p>
+                <span class="close">DELETE</span>
+                <input type="checkbox" id="checkbox" name="checkbox">
+            </li>
+        </template>
     </body>
 </html>

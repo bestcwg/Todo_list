@@ -1,6 +1,7 @@
 let myStorage = window.localStorage;
 let itemList = JSON.parse(myStorage.getItem("list")) || [];
 let newItemList = [];
+console.log(itemList);
 const template = document.querySelector("#task");
 const createTaskSubmit = document.querySelector("#submit");
 const taskField = document.querySelector("#inputfield");
@@ -12,7 +13,7 @@ createTaskSubmit.addEventListener('click', function() {
         const task = {
             item: value,
             checked: false,
-            id: Math.random()
+            id: Math.random().toString(36).substr(2)
         }
         addTask(task);
     }
@@ -40,27 +41,29 @@ function addTask(task) {
         }
 
         newItemList.push(task);
-        let index = getIndexOf(task);
 
         // Can edit tasks and saves it to lists which is stored in localstorage
         taskText.addEventListener("input", function() {
             task.item = taskText.innerHTML;
+            let index = getIndexOf(task);
 
             newItemList[index] = task;
             myStorage.setItem("list", JSON.stringify(newItemList));
         });
 
-        // Can delete tasks
+        // Add delete button to task
         taskDeleteButton.addEventListener("click", function() {
             let item = this.parentElement;
+            let index = getIndexOf(task);
             
             item.remove();
             newItemList.splice(index, 1);
             myStorage.setItem("list", JSON.stringify(newItemList));
         });
 
-        // Can check completed items
+        // Add checkbox to task
         taskCheck.addEventListener("click", function() {
+            let index = getIndexOf(task);
             newItemList[index].checked = taskCheck.checked;
             let item = this.parentElement;
 
@@ -73,6 +76,7 @@ function addTask(task) {
     }
 }
 
+// Finds index of task by iteraion through task.id and returns the index of the task
 function getIndexOf(task) {
     for (let i = 0; i < newItemList.length;i++) {
         if (newItemList[i].id === task.id) {
