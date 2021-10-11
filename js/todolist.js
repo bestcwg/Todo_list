@@ -1,9 +1,13 @@
 window.onload = function() {
     loadTaskFromStorage(myStorage);
+    console.log(myStorage.getItem("list"));
+}
+
+window.onunload = function() {
+    addTasksToStorage(myStorage);
 }
 
 let myStorage = window.localStorage;
-let itemList = new Array;
 
 function addTaskToList() {
     const task = document.forms.textinput.inputfield.value;
@@ -16,13 +20,18 @@ function addTaskToList() {
 
         taskList.appendChild(newItem);
         //addTaskToStorage(task);
-        itemList.push(task);
+        //itemList.push(task);
     }
 }
 
-function addTaskToStorage(item) {
-    let key = myStorage.length + 1;
-    myStorage.setItem(key, item);
+function addTasksToStorage(storage) {
+    storage.removeItem("list");
+    let itemList = new Array;
+
+    document.querySelectorAll("#thelist li").forEach(item =>
+        itemList.push(item.innerHTML));
+    
+    storage.setItem("list", itemList);
 }
 
 function loadTaskFromStorage(storage) {
@@ -42,10 +51,10 @@ function loadTaskFromStorage(storage) {
         }
         let test = document.querySelector("#thelist");
         test.addEventListener("click", function(item) {
-        if (item.target && item.target.tagName === "LI") {
-            item.target.classList.toggle("checked");
-        }
-    })
+            if (item.target && item.target.tagName === "LI") {
+                item.target.classList.toggle("checked");
+            }
+        });
     }
 }
 
@@ -86,8 +95,6 @@ function createEditButton(item) {
     item.appendChild(span);
 }
 
-document.querySelectorAll("#thelist li").forEach(e => 
-    console.log(e));
 
 
 
