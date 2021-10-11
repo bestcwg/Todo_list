@@ -29,13 +29,13 @@ function addTasksToStorage(storage) {
     let itemList = new Array;
 
     document.querySelectorAll("#thelist li").forEach(item =>
-        itemList.push(item.innerHTML));
+        itemList.push(item.textContent));
     
     storage.setItem("list", itemList);
 }
 
 function loadTaskFromStorage(storage) {
-    if (storage.length > 0) {
+    /*if (storage.length > 0) {
         for (let key in storage) {
             // Checks for only returning the relevant keys and not setItems etc.
             if (!storage.hasOwnProperty(key)) {
@@ -48,14 +48,28 @@ function loadTaskFromStorage(storage) {
             createDeleteButton(newItem);
             createEditButton(newItem);
             storageTaskList.appendChild(newItem);
+        }*/
+    
+    if (storage.getItem("list")) {
+        let items = storage.getItem("list");
+        let storageTaskList = document.getElementById("thelist");
+     
+        console.log(items);
+        for (let i = 0; i < items.length; i++) {
+            let newItem = document.createElement("li");
+            newItem.innerHTML = items[i];
+            createDeleteButton(newItem);
+            createEditButton(newItem);
+            storageTaskList.appendChild(newItem);
         }
-        let test = document.querySelector("#thelist");
-        test.addEventListener("click", function(item) {
-            if (item.target && item.target.tagName === "LI") {
-                item.target.classList.toggle("checked");
-            }
-        });
     }
+    
+    let test = document.querySelector("#thelist");
+    test.addEventListener("click", function(item) {
+        if (item.target && item.target.tagName === "LI") {
+            item.target.classList.toggle("checked");
+        }
+    });
 }
 
 function createDeleteButton(item) {
@@ -94,7 +108,6 @@ function createEditButton(item) {
     });
     item.appendChild(span);
 }
-
 
 
 
