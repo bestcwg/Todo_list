@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TODO LIST</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/todolist.js"></script>
+    <script src="js/todolist.js" defer></script>
 </head>
     <body>
         <div class="header">
@@ -15,9 +15,16 @@
         <div id="addtaskinput">
             <form name="textinput">
                 <input type="text" id="inputfield" name="inputfield" required>
-                <button id="submit" type="button" onclick="addTaskToList()">Add Task</button>
+                <button id="submit" type="button">Add Task</button>
             </form>
             <ul id="thelist"></ul>
+            <template id="task">
+                <li>
+                    <p contenteditable="true"></p>
+                    <span class="close">×</span>
+                    <input type="checkbox" id="checkbox" name="checkbox">
+                </li>
+            </template>
         </div>
     </body>
 </html>
