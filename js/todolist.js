@@ -1,12 +1,18 @@
 let myStorage = window.localStorage;
-let itemList = JSON.parse(myStorage.getItem("list")) || [];
 let newItemList = [];
-console.log(itemList);
+const itemList = JSON.parse(myStorage.getItem("list")) || [];
 const template = document.querySelector("#task");
 const createTaskSubmit = document.querySelector("#submit");
 const taskField = document.querySelector("#inputfield");
 
-// Add functionality to "add task button"
+taskField.addEventListener('keypress', function(e) {
+    if (e.keyCode === 13) {
+        e.preventDefault();
+        createTaskSubmit.click();
+    }
+})
+
+// Add functionality to "add task" button
 createTaskSubmit.addEventListener('click', function() {
     const value = taskField.value;
     if (value) {
@@ -17,6 +23,7 @@ createTaskSubmit.addEventListener('click', function() {
         }
         addTask(task);
     }
+    taskField.value = "";
 })
 
 // Creates to do list from local storage
