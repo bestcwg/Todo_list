@@ -33,7 +33,7 @@ h1 {
 
 
 #submit {
-    background-color: #D94929;
+    background-color: #4cd929;
     outline: none;
     cursor: pointer;
     border-radius: 15px;
@@ -56,6 +56,10 @@ h1 {
     width: 80%;
     border-radius: 15px;
     background-color: #6C69BF;
+}
+
+#inputfield::placeholder {
+    color: rgba(0, 0, 0, 0.445);
 }
 
 #thelist {
