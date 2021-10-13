@@ -1,28 +1,69 @@
 body {
     text-align: center;
-    background-color: #97BEC3;
+    background-color: #3A3659;
     margin: 0;
 	padding: 0;
 	border: 0;
     font-size: auto;
-	font: inherit;
 	vertical-align: baseline;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
-.header {
-    background-color: #314D5D;
+h1 {
+    text-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.header h1 {
-    margin: 0%;
-    font-size: 50px;
+.main {
+    font-size: 30px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 2%;
+    border-radius: 15px;
+    user-select: none;
+    background-color: #403E25;
+    padding-right: 2%;
+    padding-left: 2%;
+    padding-top: 1%;
+    padding-bottom: 5px;
+}
+
+#submit, #thelist li, #inputfield, .main {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+
+#submit {
+    background-color: #D94929;
+    outline: none;
+    cursor: pointer;
+    border-radius: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-family: fantasy;
+    float: right;
+}
+
+#submit:hover {
+    background-color: #260101;
+}
+
+#inputfield {
+    border: none;
+    outline: none;
+    font-size: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 80%;
+    border-radius: 15px;
+    background-color: #6C69BF;
 }
 
 #thelist {
-    margin-top: 0%;
     list-style: none;
-    margin-left: 20%;
-    margin-right: 20%;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 3%;
+    margin-top: 3%;
 }
 
 #thelist ::before {
@@ -30,48 +71,24 @@ body {
 }
 
 #thelist li {
-    font-size: 30px;
-    border-radius: 5px;
-    border: 2px black solid;
-    background-color: #CFA18F;
-    margin-left: auto;
-    margin-right: auto;
+    background-color: #6C69BF;
     margin-top: 3px;
     margin-bottom: 3px;
     user-select: none;
     cursor: pointer;
     position: relative;
+    border-radius: 15px;
+}
+
+#thelist li:nth-child(even) {
+    background-color: #6c69bfcb;
 }
 
 #thelist li p { 
     position: absolute;
     top: 0;
-    left: 4%;
+    left: 50px;
     margin-top: 0%;
-}
-
-#submit {
-    background-color: #CFA18F;
-    border: none;
-    outline: none;
-    cursor: pointer;
-}
-
-#addtaskinput {
-    padding-top: 10px;
-}
-
-#inputfield {
-    width: 50%;
-    border: none;
-    outline: none;
-    font-size: 30px;
-    margin-top: 5px;
-}
-
-#thelist .checked {
-    background-color: rgba(44, 102, 44, 0.74);
-    
 }
 
 #thelist .checked p {
@@ -79,25 +96,22 @@ body {
 }
 
 #thelist .close {
-    position: absolute;
-    right: 0;
-    top: 0;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    font-family: fantasy;
+    float: right;
     padding-right: 10px;
     padding-left: 10px;
-    background-color: rgba(255, 0, 0, 0.479);
+    background-color: #D94929;
 }
 
 #thelist .close:hover {
-    background-color: rgba(241, 163, 163, 0.678);
+    background-color: #260101;
 }
 
 #thelist #checkbox {
-    
-    position: absolute;
-    left: 0;
-    top: 0;
+    margin-left: 10px;
+    float: left;
     width: 30px;
     height: 30px;
-    padding-right: 10px;
-    padding-left: 10px;
 }

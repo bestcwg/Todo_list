@@ -9,14 +9,6 @@
     <script src="js/todolist.js" defer></script>
 </head>
     <body>
-        <div class="header">
-            <h1>TODO-LIST</h1>
-        </div>
-        <form name="textinput">
-            <input type="text" id="inputfield" name="inputfield" required>
-            <button id="submit" type="button">Add Task</button>
-        </form>
-        <ul id="thelist"></ul>
         <template id="task">
             <li>
                 <p contenteditable="true"></p>
@@ -24,5 +16,13 @@
                 <input type="checkbox" id="checkbox" name="checkbox">
             </li>
         </template>
+        <div class="main">
+            <h1>TODO-LIST</h1>
+            <div class="input">
+                <input type="text" id="inputfield" name="inputfield">
+                <span id="submit" type="button">ADD TASK</span>
+            </div>
+            <ul id="thelist"></ul>
+        </div>
     </body>
 </html>
