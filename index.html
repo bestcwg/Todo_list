@@ -16,13 +16,30 @@
                 <input type="checkbox" id="checkbox" name="checkbox">
             </li>
         </template>
-        <div class="main">
-            <h1>TODO-LIST</h1>
-            <div class="input">
-                <input type="text" id="inputfield" name="inputfield" placeholder="Write task here...">
-                <span id="submit" type="button">ADD TASK</span>
+        <template id="tasklist">
+            <div class="tasks">
+                <h1>TODO-LIST</h1>
+                <div class="input">
+                    <input type="text" id="inputfield" name="inputfield" placeholder="Write task here...">
+                    <span id="submit" type="button">ADD TASK</span>
+                </div>
+                <ul id="thelist"></ul>
             </div>
-            <ul id="thelist"></ul>
+        </template>
+        <div class="main">
+            <div class="tasks">
+                <h1>TODO-LIST</h1>
+                <div class="input">
+                    <input type="text" id="inputfield" name="inputfield" placeholder="Write task here...">
+                    <span id="submit" type="button">ADD TASK</span>
+                </div>
+                <ul id="thelist"></ul>
+            </div>
+        </div>
+        <div class="taskmenu">
+            <span class="addtasklist">
+                <p>+</p>
+            </span>
         </div>
     </body>
 </html>

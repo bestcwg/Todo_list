@@ -14,10 +14,14 @@ h1 {
 }
 
 .main {
-    font-size: 30px;
+    border: black solid 2px;
     margin-left: 20%;
     margin-right: 20%;
     margin-top: 2%;
+}
+
+.tasks {
+    font-size: 30px;
     border-radius: 15px;
     user-select: none;
     background-color: #403E25;
@@ -118,4 +122,36 @@ h1 {
     float: left;
     width: 30px;
     height: 30px;
+}
+
+.taskmenu {
+    position: absolute;
+    top: 0;
+    background-color: #403E25;
+    border: solid black 2px;
+    padding: 0.5%;
+    margin-left: 2%;
+    margin-top: 2%;
+    border-radius: 15px;
+    user-select: none;
+}
+
+.taskmenu :only-child {
+    cursor: pointer;
+}
+
+.addtasklist {
+    height: 50px;
+    width: 50px;
+    background-color: green;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 40px;
+}
+
+.addtasklist p {
+    padding-bottom: 5px;
 }

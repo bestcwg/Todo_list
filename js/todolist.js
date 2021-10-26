@@ -4,12 +4,17 @@ const itemList = JSON.parse(myStorage.getItem("list")) || [];
 const template = document.querySelector("#task");
 const createTaskSubmit = document.querySelector("#submit");
 const taskField = document.querySelector("#inputfield");
+const addTaskList = document.querySelector(".addtasklist");
 
 taskField.addEventListener('keypress', function(e) {
     if (e.keyCode === 13) {
         e.preventDefault();
         createTaskSubmit.click();
     }
+})
+
+addTaskList.addEventListener('click', function() {
+    alert("pressed");
 })
 
 // Add functionality to "add task" button
