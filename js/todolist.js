@@ -1,43 +1,53 @@
 let myStorage = window.localStorage;
 let newItemList = [];
 const itemList = JSON.parse(myStorage.getItem("list")) || [];
-const template = document.querySelector("#task");
-const createTaskSubmit = document.querySelector("#submit");
-const taskField = document.querySelector("#inputfield");
+const TEMPLATE_OF_TASK = document.querySelector("#task");
+let allItemList = [];
+
+const TEMPLATE_OF_TASKLIST = document.querySelector("#tasklist");
 const addTaskList = document.querySelector(".addtasklist");
 
-taskField.addEventListener('keypress', function(e) {
-    if (e.keyCode === 13) {
-        e.preventDefault();
-        createTaskSubmit.click();
-    }
-})
+const TASK_LIST_HOLDER = document.querySelector(".main");
+const TEMPLATE_SIDEBAR_TASK = document.querySelector("#tasklistsidebar");
+const TASK_LIST_SIDEBAR_HOLDER = document.querySelector(".sidebarmenu");
 
 addTaskList.addEventListener('click', function() {
-    alert("pressed");
+    const clone = TEMPLATE_OF_TASKLIST.content.cloneNode(true);
+    TASK_LIST_HOLDER.append(clone);
+
+    const cloneSideBar = TEMPLATE_SIDEBAR_TASK.content.cloneNode(true);
+    TASK_LIST_SIDEBAR_HOLDER.append(cloneSideBar);
 })
 
-// Add functionality to "add task" button
-createTaskSubmit.addEventListener('click', function() {
-    const value = taskField.value;
-    if (value) {
-        const task = {
-            item: value,
-            checked: false,
-            id: Math.random().toString(36).substr(2)
-        }
-        addTask(task);
+for(let key in myStorage) {
+    if (!myStorage.hasOwnProperty(key)) {
+      continue; // skip keys like "setItem", "getItem" etc
     }
-    taskField.value = "";
-})
 
-// Creates to do list from local storage
-for(let i = 0; i < itemList.length; i++) {
-    addTask(itemList[i]);
+    allItemList.push({
+        name: [key],
+        tasks: JSON.parse(myStorage.getItem(key))
+    });
 }
 
-function addTask(task) {
-    const clone = template.content.cloneNode(true);
+console.log(allItemList);
+
+// Creates to do list from local storage
+for(let i = 0; i < allItemList.length; i++) {
+    const clone = TEMPLATE_OF_TASKLIST.content.cloneNode(true);
+    const taskListName = clone.querySelector("h1");
+    taskListName.innerHTML = allItemList[i].name;
+    TASK_LIST_HOLDER.append(clone);
+    
+    for(let j = 0; j < allItemList[i].tasks.length; j++) {
+        addTask(allItemList[i].name, allItemList[i].tasks[j]);
+    }
+
+    addTaskButton();
+}
+
+function addTask(name, task) {
+    const clone = TEMPLATE_OF_TASK.content.cloneNode(true);
     const taskListChecks = clone.querySelector("li");
     const taskText = clone.querySelector("li p");
     const taskCheck = clone.querySelector("li #checkbox");
@@ -60,7 +70,7 @@ function addTask(task) {
             let index = getIndexOf(task);
 
             newItemList[index] = task;
-            myStorage.setItem("list", JSON.stringify(newItemList));
+            myStorage.setItem(name, JSON.stringify(newItemList));
         });
 
         // Add delete button to task
@@ -70,7 +80,7 @@ function addTask(task) {
             
             item.remove();
             newItemList.splice(index, 1);
-            myStorage.setItem("list", JSON.stringify(newItemList));
+            myStorage.setItem(name, JSON.stringify(newItemList));
         });
 
         // Add checkbox to task
@@ -80,11 +90,11 @@ function addTask(task) {
             let item = this.parentElement;
 
             item.classList.toggle("checked");
-            myStorage.setItem("list", JSON.stringify(newItemList));
+            myStorage.setItem(name, JSON.stringify(newItemList));
         })
 
         taskList.appendChild(clone);
-        myStorage.setItem("list", JSON.stringify(newItemList));
+        myStorage.setItem(name, JSON.stringify(newItemList));
     }
 }
 
@@ -96,3 +106,32 @@ function getIndexOf(task) {
         }
     }
 }
+
+function addTaskButton() {
+    const taskField = document.querySelector("#inputfield");
+    const createTaskSubmit = document.querySelector("#submit");
+
+    taskField.addEventListener('keypress', function(e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            createTaskSubmit.click();
+        }
+    })
+
+    // Add functionality to "add task" button
+    createTaskSubmit.addEventListener('click', function() {
+        const value = taskField.value;
+        if (value) {
+            const task = {
+                item: value,
+                checked: false,
+                id: Math.random().toString(36).substr(2)
+            }
+            let listName = document.querySelector(".tasks h1").innerHTML;
+
+            addTask(listName, task);
+        }
+        taskField.value = "";
+    })
+}
+

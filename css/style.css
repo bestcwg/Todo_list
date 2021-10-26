@@ -124,7 +124,7 @@ h1 {
     height: 30px;
 }
 
-.taskmenu {
+.sidebarmenu {
     position: absolute;
     top: 0;
     background-color: #403E25;
@@ -136,7 +136,7 @@ h1 {
     user-select: none;
 }
 
-.taskmenu :only-child {
+.sidebarmenu :only-child {
     cursor: pointer;
 }
 
@@ -154,4 +154,18 @@ h1 {
 
 .addtasklist p {
     padding-bottom: 5px;
+}
+
+#tasksidebar {
+    border: solid black 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+    background-color: #6C69BF;
+    border-radius: 15px;
+}
+
+#tasksidebar:nth-child(odd) {
+    background-color: #6c69bfcb;
 }

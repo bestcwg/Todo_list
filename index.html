@@ -9,37 +9,36 @@
     <script src="js/todolist.js" defer></script>
 </head>
     <body>
-        <template id="task">
-            <li>
-                <p contenteditable="true"></p>
-                <span class="close">DELETE</span>
-                <input type="checkbox" id="checkbox" name="checkbox">
-            </li>
-        </template>
-        <template id="tasklist">
-            <div class="tasks">
-                <h1>TODO-LIST</h1>
-                <div class="input">
-                    <input type="text" id="inputfield" name="inputfield" placeholder="Write task here...">
-                    <span id="submit" type="button">ADD TASK</span>
-                </div>
-                <ul id="thelist"></ul>
-            </div>
-        </template>
-        <div class="main">
-            <div class="tasks">
-                <h1>TODO-LIST</h1>
-                <div class="input">
-                    <input type="text" id="inputfield" name="inputfield" placeholder="Write task here...">
-                    <span id="submit" type="button">ADD TASK</span>
-                </div>
-                <ul id="thelist"></ul>
-            </div>
-        </div>
-        <div class="taskmenu">
+        <div class="main"></div>
+        <div class="sidebarmenu">
             <span class="addtasklist">
                 <p>+</p>
             </span>
         </div>
     </body>
+
+    <template id="task">
+        <li>
+            <p contenteditable="true"></p>
+            <span class="close">DELETE</span>
+            <input type="checkbox" id="checkbox" name="checkbox">
+        </li>
+    </template>
+
+    <template id="tasklist">
+        <div class="tasks">
+            <h1>TODO-LIST</h1>
+            <div class="input">
+                <input type="text" id="inputfield" name="inputfield" placeholder="Write task here...">
+                <span id="submit" type="button">ADD TASK</span>
+            </div>
+            <ul id="thelist"></ul>
+        </div>
+    </template>
+
+    <template id="tasklistsidebar">
+        <span id="tasksidebar">
+            <p>task</p>
+        </span>
+    </template>
 </html>
