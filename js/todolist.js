@@ -7,7 +7,6 @@ const TEMPLATE_SIDEBAR_TASK = document.querySelector("#tasklistsidebar");
 const TEMPLATE_OF_TASK = document.querySelector("#task");
 
 const addTaskList = document.querySelector(".addtasklist");
-const taskListButton = document.querySelector(".sidebarsubmit");
 
 const TASK_LIST_HOLDER = document.querySelector(".main");
 const TASK_LIST_SIDEBAR_HOLDER = document.querySelector(".sidebarmenu");
@@ -141,13 +140,14 @@ function addTaskListToSidebar(name) {
 }
 
 function sidebarMenuAddAndClear() {
-    let popup = document.querySelector(".sidebarpopup");
-    let clearButton = document.querySelector(".clearsidebar");
+    const popup = document.querySelector(".sidebarpopup");
+    const clearButton = document.querySelector(".clearsidebar");
+    const taskList = document.querySelector("#inputsidebar");
+    const sidebarSubmit = document.querySelector(".sidebarsubmit");
+
     popup.style.display = "none";
-    const allTaskSidebar = document.querySelectorAll("#tasksidebar");
 
     addTaskList.addEventListener('click', function() {
-        let popup = document.querySelector(".sidebarpopup")
         if (popup.style.display === "none") {
             popup.style.display = "block";
         } else {
@@ -155,8 +155,7 @@ function sidebarMenuAddAndClear() {
         }
     });
 
-    taskListButton.addEventListener('click', function() {
-        let taskList = document.querySelector("#inputsidebar");
+    sidebarSubmit.addEventListener('click', function() {
         let taskName = taskList.value;
     
         if (taskName !== "") {
@@ -169,10 +168,29 @@ function sidebarMenuAddAndClear() {
 
             myStorage.setItem(taskName, JSON.stringify(tempList));
         }
+        taskList.value = "";
+    });
+
+    taskList.addEventListener('keypress', function(e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            sidebarSubmit.click();
+        }
     });
 
     clearButton.addEventListener('click',function() {
         myStorage.clear();
-        allTaskSidebar.parentElement.remove.allTaskSidebar;
+        const allTaskSidebar = document.querySelectorAll("#tasksidebar");
+        const allTaskLists = document.querySelectorAll("#tasks");
+
+        allTaskSidebar.forEach(item => {
+            let parentNode = this.parentElement;
+            parentNode.removeChild(item);
+        })
+
+        allTaskLists.forEach(item => {
+            let parentNode = item.parentElement;
+            parentNode.removeChild(item);
+        })
     });
 }
