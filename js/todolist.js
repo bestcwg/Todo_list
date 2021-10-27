@@ -12,7 +12,7 @@ const taskListButton = document.querySelector(".sidebarsubmit");
 const TASK_LIST_HOLDER = document.querySelector(".main");
 const TASK_LIST_SIDEBAR_HOLDER = document.querySelector(".sidebarmenu");
 
-popUpForAddTaskList();
+sidebarMenuAddAndClear();
 
 for(let key in myStorage) {
     if (!myStorage.hasOwnProperty(key)) {
@@ -113,7 +113,7 @@ function addTaskButton() {
             e.preventDefault();
             createTaskSubmit.click();
         }
-    })
+    });
 
     // Add functionality to "add task" button
     createTaskSubmit.addEventListener('click', function() {
@@ -129,7 +129,7 @@ function addTaskButton() {
             addTask(listName, task);
         }
         taskField.value = "";
-    })
+    });
 }
 
 function addTaskListToSidebar(name) {
@@ -137,12 +137,14 @@ function addTaskListToSidebar(name) {
     let tempName = cloneSideBar.querySelector("#tasksidebar p");
     tempName.innerHTML = name;
 
-    TASK_LIST_SIDEBAR_HOLDER.append(cloneSideBar);
+    TASK_LIST_SIDEBAR_HOLDER.append(cloneSideBar);   
 }
 
-function popUpForAddTaskList() {
-    let popup = document.querySelector(".sidebarpopup")
+function sidebarMenuAddAndClear() {
+    let popup = document.querySelector(".sidebarpopup");
+    let clearButton = document.querySelector(".clearsidebar");
     popup.style.display = "none";
+    const allTaskSidebar = document.querySelectorAll("#tasksidebar");
 
     addTaskList.addEventListener('click', function() {
         let popup = document.querySelector(".sidebarpopup")
@@ -151,7 +153,7 @@ function popUpForAddTaskList() {
         } else {
             popup.style.display = "none";
         }
-    })
+    });
 
     taskListButton.addEventListener('click', function() {
         let taskList = document.querySelector("#inputsidebar");
@@ -163,6 +165,14 @@ function popUpForAddTaskList() {
             TASK_LIST_HOLDER.append(clone);
             addTaskListToSidebar(taskName);
             addTaskButton();
+            let tempList = [];
+
+            myStorage.setItem(taskName, JSON.stringify(tempList));
         }
-    })
+    });
+
+    clearButton.addEventListener('click',function() {
+        myStorage.clear();
+        allTaskSidebar.parentElement.remove.allTaskSidebar;
+    });
 }
