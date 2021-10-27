@@ -12,16 +12,19 @@ const TASK_LIST_HOLDER = document.querySelector(".main");
 const TASK_LIST_SIDEBAR_HOLDER = document.querySelector(".sidebarmenu");
 
 sidebarMenuAddAndClear();
+getFromStorage();
 
-for(let key in myStorage) {
-    if (!myStorage.hasOwnProperty(key)) {
-      continue; // skip keys like "setItem", "getItem" etc
+function getFromStorage() {
+    for(let key in myStorage) {
+        if (!myStorage.hasOwnProperty(key)) {
+        continue; // skip keys like "setItem", "getItem" etc
+        }
+
+        allItemList.push({
+            name: [key],
+            tasks: JSON.parse(myStorage.getItem(key))
+        });
     }
-
-    allItemList.push({
-        name: [key],
-        tasks: JSON.parse(myStorage.getItem(key))
-    });
 }
 
 console.log(allItemList);
@@ -38,9 +41,9 @@ for(let i = 0; i < allItemList.length; i++) {
     for(let j = 0; j < allItemList[i].tasks.length; j++) {
         addTask(allItemList[i].name, allItemList[i].tasks[j]);
     }
-
-    addTaskButton();
 }
+
+addTaskButton();
 
 function addTask(name, task) {
     const clone = TEMPLATE_OF_TASK.content.cloneNode(true);
@@ -48,7 +51,15 @@ function addTask(name, task) {
     const taskText = clone.querySelector("li p");
     const taskCheck = clone.querySelector("li #checkbox");
     const taskDeleteButton = clone.querySelector(".close");
-    let taskList = document.getElementById("thelist");
+    let test = document.querySelectorAll("#tasks");
+    let taskList = document.querySelector("#thelist");
+    for (let i = 0; i < test.length; i++) {
+        //console.log(test);
+        console.log(test[i].childNodes[1].innerHTML);
+        if (test[i].childNodes[1].innerHTML === name) {
+            console.log(test[i].childNodes[1].innerHTML);
+        }
+    }
 
     if (task.item !== "")  {
         taskText.innerHTML = task.item;
@@ -58,15 +69,13 @@ function addTask(name, task) {
             taskListChecks.classList.toggle("checked");
         }
 
-        newItemList.push(task);
-
         // Can edit tasks and saves it to lists which is stored in localstorage
         taskText.addEventListener("input", function() {
             task.item = taskText.innerHTML;
             let index = getIndexOf(task);
 
-            newItemList[index] = task;
-            myStorage.setItem(name, JSON.stringify(newItemList));
+            allItemList[index.i].tasks[index.j] = task;
+            myStorage.setItem(name, JSON.stringify(allItemList[index.i].tasks));
         });
 
         // Add delete button to task
@@ -75,48 +84,67 @@ function addTask(name, task) {
             let index = getIndexOf(task);
             
             item.remove();
-            newItemList.splice(index, 1);
-            myStorage.setItem(name, JSON.stringify(newItemList));
+            allItemList[index.i].tasks.splice(index.j, 1);
+            myStorage.setItem(name, JSON.stringify(allItemList[index.i].tasks));
         });
 
         // Add checkbox to task
         taskCheck.addEventListener("click", function() {
             let index = getIndexOf(task);
-            newItemList[index].checked = taskCheck.checked;
+            allItemList[index.i].tasks[index.j].checked = taskCheck.checked;
             let item = this.parentElement;
 
             item.classList.toggle("checked");
-            myStorage.setItem(name, JSON.stringify(newItemList));
+            myStorage.setItem(name, JSON.stringify(allItemList[index.i].tasks));
         })
 
         taskList.appendChild(clone);
-        myStorage.setItem(name, JSON.stringify(newItemList));
+        
+        //myStorage.setItem(name, JSON.stringify(allItemList[0].tasks));
     }
 }
 
 // Finds index of task by iteraion through task.id and returns the index of the task
-function getIndexOf(task) {
+/*function getIndexOf(task) {
     for (let i = 0; i < newItemList.length;i++) {
         if (newItemList[i].id === task.id) {
             return i;
         }
     }
+}*/
+
+function getIndexOf(task) {
+    for (let i = 0; i < allItemList.length;i++) {
+        for(let j = 0; j < allItemList[i].tasks.length;j++) {
+            if (allItemList[i].tasks[j].id === task.id) {
+                return {
+                    i: [i],
+                    j: [j]
+                };
+            }
+        }
+    }
 }
 
 function addTaskButton() {
-    const taskField = document.querySelector("#inputfield");
-    const createTaskSubmit = document.querySelector("#submit");
+    const taskField = document.querySelectorAll("#inputfield");
 
-    taskField.addEventListener('keypress', function(e) {
-        if (e.keyCode === 13) {
-            e.preventDefault();
-            createTaskSubmit.click();
-        }
-    });
+    taskField.forEach(item => {
+        item.addEventListener('keypress', function(e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+                console.log(this.parentElement);
+                let testest = this.parentElement;
+                testest.querySelector("#submit").click();
+            }
+        });
+    })
+    
 
     // Add functionality to "add task" button
-    createTaskSubmit.addEventListener('click', function() {
+    /*createTaskSubmit.addEventListener('click', function() {
         const value = taskField.value;
+        console.log(taskField.value);
         if (value) {
             const task = {
                 item: value,
@@ -128,7 +156,29 @@ function addTaskButton() {
             addTask(listName, task);
         }
         taskField.value = "";
-    });
+    });*/
+
+    const test = document.querySelectorAll("#tasks #submit");
+
+    test.forEach(item => {
+        item.addEventListener('click', function() {
+            let parentNode = this.parentElement;
+            const value = parentNode.querySelector("#inputfield").value;
+            if (value) {
+                const task = {
+                    item: value,
+                    checked: false,
+                    id: Math.random().toString(36).substr(2)
+                }
+                let listName = document.querySelector("#tasks h1").innerHTML;
+
+                addTask(listName, task);
+            }
+            taskField.forEach(item => {
+                item.value = "";
+            })
+        }) 
+    })
 }
 
 function addTaskListToSidebar(name) {
@@ -167,6 +217,8 @@ function sidebarMenuAddAndClear() {
             let tempList = [];
 
             myStorage.setItem(taskName, JSON.stringify(tempList));
+
+            getFromStorage();
         }
         taskList.value = "";
     });
