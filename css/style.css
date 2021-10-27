@@ -20,7 +20,7 @@ h1 {
     margin-top: 2%;
 }
 
-.tasks {
+#tasks {
     font-size: 30px;
     border-radius: 15px;
     user-select: none;
@@ -136,9 +136,31 @@ h1 {
     user-select: none;
 }
 
-.sidebarmenu :only-child {
+.sidebarpopup {
+    position: absolute;
+    border: solid black 2px;
+    padding: 10%;
+    padding-bottom: 20px;
+    background-color: white;
+    border-radius: 15px;
+    top: -2px;
+    left: 80px;
+}
+
+#inputsidebar {
+    margin-bottom: 10px;
+}
+
+.sidebarsubmit {
+    position: relative;
+    padding-left: 60px;
+    padding-right: 60px;
+    border: solid black 2px;
+    background-color: green;
     cursor: pointer;
 }
+
+
 
 .addtasklist {
     height: 50px;
@@ -150,6 +172,7 @@ h1 {
     align-items: center;
     color: white;
     font-size: 40px;
+    cursor: pointer;
 }
 
 .addtasklist p {
@@ -164,6 +187,7 @@ h1 {
     margin-top: 5px;
     background-color: #6C69BF;
     border-radius: 15px;
+    cursor: pointer;
 }
 
 #tasksidebar:nth-child(odd) {

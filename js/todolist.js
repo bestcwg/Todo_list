@@ -1,23 +1,18 @@
 let myStorage = window.localStorage;
 let newItemList = [];
-const itemList = JSON.parse(myStorage.getItem("list")) || [];
-const TEMPLATE_OF_TASK = document.querySelector("#task");
 let allItemList = [];
 
 const TEMPLATE_OF_TASKLIST = document.querySelector("#tasklist");
+const TEMPLATE_SIDEBAR_TASK = document.querySelector("#tasklistsidebar");
+const TEMPLATE_OF_TASK = document.querySelector("#task");
+
 const addTaskList = document.querySelector(".addtasklist");
+const taskListButton = document.querySelector(".sidebarsubmit");
 
 const TASK_LIST_HOLDER = document.querySelector(".main");
-const TEMPLATE_SIDEBAR_TASK = document.querySelector("#tasklistsidebar");
 const TASK_LIST_SIDEBAR_HOLDER = document.querySelector(".sidebarmenu");
 
-addTaskList.addEventListener('click', function() {
-    const clone = TEMPLATE_OF_TASKLIST.content.cloneNode(true);
-    TASK_LIST_HOLDER.append(clone);
-
-    const cloneSideBar = TEMPLATE_SIDEBAR_TASK.content.cloneNode(true);
-    TASK_LIST_SIDEBAR_HOLDER.append(cloneSideBar);
-})
+popUpForAddTaskList();
 
 for(let key in myStorage) {
     if (!myStorage.hasOwnProperty(key)) {
@@ -38,6 +33,8 @@ for(let i = 0; i < allItemList.length; i++) {
     const taskListName = clone.querySelector("h1");
     taskListName.innerHTML = allItemList[i].name;
     TASK_LIST_HOLDER.append(clone);
+
+    addTaskListToSidebar(allItemList[i].name);
     
     for(let j = 0; j < allItemList[i].tasks.length; j++) {
         addTask(allItemList[i].name, allItemList[i].tasks[j]);
@@ -127,7 +124,7 @@ function addTaskButton() {
                 checked: false,
                 id: Math.random().toString(36).substr(2)
             }
-            let listName = document.querySelector(".tasks h1").innerHTML;
+            let listName = document.querySelector("#tasks h1").innerHTML;
 
             addTask(listName, task);
         }
@@ -135,3 +132,37 @@ function addTaskButton() {
     })
 }
 
+function addTaskListToSidebar(name) {
+    const cloneSideBar = TEMPLATE_SIDEBAR_TASK.content.cloneNode(true);
+    let tempName = cloneSideBar.querySelector("#tasksidebar p");
+    tempName.innerHTML = name;
+
+    TASK_LIST_SIDEBAR_HOLDER.append(cloneSideBar);
+}
+
+function popUpForAddTaskList() {
+    let popup = document.querySelector(".sidebarpopup")
+    popup.style.display = "none";
+
+    addTaskList.addEventListener('click', function() {
+        let popup = document.querySelector(".sidebarpopup")
+        if (popup.style.display === "none") {
+            popup.style.display = "block";
+        } else {
+            popup.style.display = "none";
+        }
+    })
+
+    taskListButton.addEventListener('click', function() {
+        let taskList = document.querySelector("#inputsidebar");
+        let taskName = taskList.value;
+    
+        if (taskName !== "") {
+            const clone = TEMPLATE_OF_TASKLIST.content.cloneNode(true);
+            clone.querySelector("#tasks h1").innerHTML = taskName;
+            TASK_LIST_HOLDER.append(clone);
+            addTaskListToSidebar(taskName);
+            addTaskButton();
+        }
+    })
+}
