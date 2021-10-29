@@ -13,33 +13,38 @@ const addTaskList = document.querySelector(".addtasklist");
 const TASK_LIST_HOLDER = document.querySelector(".main");
 const TASK_LIST_SIDEBAR_HOLDER = document.querySelector(".sidebarmenu");
 
+
 sidebarMenuAddAndClear();
+loadFromStorage();
+addTaskButton();
 
-if (myStorage.getItem("todoLists")) {
-    todoLists = JSON.parse(myStorage.getItem("todoLists"));
-}
+function loadFromStorage() {
+    if (myStorage.getItem("todoLists")) {
+        todoLists = JSON.parse(myStorage.getItem("todoLists"));
+    }
 
-if (myStorage.getItem("todoTasks")) {
-    todoTasks = JSON.parse(myStorage.getItem("todoTasks"));
-}
+    if (myStorage.getItem("todoTasks")) {
+        todoTasks = JSON.parse(myStorage.getItem("todoTasks"));
+    }
 
-// Creates to do list from local storage
-for(let i = 0; i < todoLists.length; i++) {
-    const clone = TEMPLATE_OF_TASKLIST.content.cloneNode(true);
-    const taskListName = clone.querySelector("h1");
-    taskListName.innerHTML = todoLists[i].name;
-    TASK_LIST_HOLDER.append(clone);
+    // Creates to do list from local storage
+    for(let i = 0; i < todoLists.length; i++) {
+        const clone = TEMPLATE_OF_TASKLIST.content.cloneNode(true);
+        const taskListName = clone.querySelector("h1");
+        
+        taskListName.innerHTML = todoLists[i].name;
+        console.log(clone)
+        TASK_LIST_HOLDER.append(clone);
 
-    addTaskListToSidebar(todoLists[i].name);
+        addTaskListToSidebar(i, todoLists[i].name);
 
-    for(let j = 0; j < todoTasks.length; j++) {
-        if (todoLists[i].id === todoTasks[j].id) {
-            addTask(i, todoTasks[j]);
+        for(let j = 0; j < todoTasks.length; j++) {
+            if (todoLists[i].id === todoTasks[j].id) {
+                addTask(i, todoTasks[j]);
+            }
         }
     }
 }
-
-addTaskButton();
 
 function addTaskButton() {
     const TASK_INPUTFIELD = document.querySelectorAll("#tasks #inputfield");
@@ -90,42 +95,37 @@ function addTask(i, task) {
 
         newTodoTasks.push(task);
 
+        function findIndex(task) {
+            for(let j = 0; j < newTodoTasks.length; j++) {
+                if(newTodoTasks[j].item === task.item && newTodoTasks[j].id === task.id) {
+                    return j;
+                }
+            }
+            return -1;
+        }
+
         // Can edit tasks and saves it to lists which is stored in localstorage
         taskText.addEventListener("input", function() {
             text = taskText.innerHTML;
 
-            for(let j = 0; j < newTodoTasks.length; j++) {
-                if(newTodoTasks[j].item === task.item) {
-                    newTodoTasks[j].item = text;
-                }
-            }
+            newTodoTasks[findIndex(task)].item = text;
 
             myStorage.setItem("todoTasks", JSON.stringify(newTodoTasks));
         });
 
-        
         // Add delete button to task
         taskDeleteButton.addEventListener("click", function() {
             let parent = this.parentElement;
             parent.remove();
 
-            for(let j = 0; j < newTodoTasks.length; j++) {
-                if(newTodoTasks[j].item === task.item) {
-                    newTodoTasks.splice(j, 1);
-                }
-            }
+            newTodoTasks.splice(findIndex(task), 1);
+            
             myStorage.setItem("todoTasks", JSON.stringify(newTodoTasks));
         });
 
-        
         // Add checkbox to task
         taskCheck.addEventListener("click", function() {
-            for(let j = 0; j < newTodoTasks.length; j++) {
-                if(newTodoTasks[j].item === task.item) {
-                    newTodoTasks[j].checked = taskCheck.checked;
-                }
-            }
-
+            newTodoTasks[findIndex(task)].checked = taskCheck.checked;
             let item = this.parentElement;
 
             item.classList.toggle("checked");
@@ -137,12 +137,18 @@ function addTask(i, task) {
     }
 }
 
-function addTaskListToSidebar(name) {
+function addTaskListToSidebar(i, name) {
     const cloneSideBar = TEMPLATE_SIDEBAR_TASK.content.cloneNode(true);
     let tempName = cloneSideBar.querySelector("#tasksidebar p");
     tempName.innerHTML = name;
 
-    TASK_LIST_SIDEBAR_HOLDER.append(cloneSideBar);   
+    TASK_LIST_SIDEBAR_HOLDER.append(cloneSideBar); 
+
+    let event = document.querySelectorAll("#tasksidebar");
+    event[i].addEventListener("click", function() {
+        console.log(document.querySelectorAll("#tasks")[i]);
+        document.querySelectorAll("#tasks")[i].classList.toggle("hidden");
+    })
 }
 
 function sidebarMenuAddAndClear() {
@@ -162,12 +168,14 @@ function sidebarMenuAddAndClear() {
             const clone = TEMPLATE_OF_TASKLIST.content.cloneNode(true);
             clone.querySelector("#tasks h1").innerHTML = taskName;
             TASK_LIST_HOLDER.append(clone);
-            addTaskListToSidebar(taskName);
+            //addTaskListToSidebar(taskName);
             addTaskButton();
+            
             todoLists.push({
                 name: taskName,
                 id: todoLists.length
             })
+            addTaskListToSidebar(todoLists.length - 1,taskName);
 
             myStorage.setItem("todoLists", JSON.stringify(todoLists));
         }
@@ -201,3 +209,54 @@ function sidebarMenuAddAndClear() {
         })
     });
 }
+
+// TEST
+
+function handleDragStart(e) {
+    dragSrcEl = this;
+  
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+    console.log("drag start");
+  }
+
+function handleDragEnd(e) {
+    console.log("drag end");
+}
+
+function handleDragOver(e) {
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+    console.log("drag over");
+    console.log(e.target);
+    return false;
+}
+
+function handleDrop(e) {
+    e.stopPropagation();
+  
+    if (dragSrcEl !== this) {
+      //dragSrcEl.innerHTML = this.innerHTML;
+      //this.innerHTML = e.dataTransfer.getData('text/html');
+      console.log(dragSrcEl);
+      console.log(e.target);
+      //e.target.appendChild(dragSrcEl);
+      e.target.parentNode.appendChild(dragSrcEl);
+    }
+  
+    return false;
+  }
+
+let tasks = document.querySelectorAll("#thelist li");
+let taskLists = document.querySelectorAll("#tasks");
+
+taskLists.forEach(function(lists) {
+    lists.addEventListener('dragover', handleDragOver);
+    lists.addEventListener('dragend', handleDragEnd);
+    lists.addEventListener('drop', handleDrop);
+})
+
+tasks.forEach(function(item) {
+  item.addEventListener('dragstart', handleDragStart);
+});
