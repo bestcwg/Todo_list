@@ -55,11 +55,16 @@ function addTask(name, task) {
     let taskList = document.querySelector("#thelist");
     for (let i = 0; i < test.length; i++) {
         //console.log(test);
-        console.log(test[i].childNodes[1].innerHTML);
+        //console.log(test[i].childNodes[1].innerHTML);
         if (test[i].childNodes[1].innerHTML === name) {
             console.log(test[i].childNodes[1].innerHTML);
         }
     }
+
+    console.log(allItemList[0].tasks)
+    allItemList[0].tasks.push("test");
+
+    console.log(allItemList);
 
     if (task.item !== "")  {
         taskText.innerHTML = task.item;
@@ -195,14 +200,8 @@ function sidebarMenuAddAndClear() {
     const taskList = document.querySelector("#inputsidebar");
     const sidebarSubmit = document.querySelector(".sidebarsubmit");
 
-    popup.style.display = "none";
-
     addTaskList.addEventListener('click', function() {
-        if (popup.style.display === "none") {
-            popup.style.display = "block";
-        } else {
-            popup.style.display = "none";
-        }
+        popup.classList.toggle("hidden");
     });
 
     sidebarSubmit.addEventListener('click', function() {
